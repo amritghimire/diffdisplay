@@ -1,0 +1,92 @@
+<html>
+<head>
+    <title>
+        Difference
+    </title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .green {
+            color: green;
+        }
+
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col-4 mx-auto">
+            <div class="jumbotron text-center">
+                <h1 class="display-4">Initial</h1>
+                <label for="initial"></label>
+                <textarea name="initial" id="initial" rows="10">
+
+                </textarea>
+            </div>
+        </div>
+        <div class="col-4 mx-auto">
+            <div class="jumbotron text-center">
+                <h1 class="display-4">Your input</h1>
+                <label for="final"></label>
+                <textarea name="final" id="final" rows="10">
+
+                </textarea>
+
+            </div>
+        </div>
+        <div class="col-4 mx-auto">
+            <div class="jumbotron text-center">
+                <div class="row"><h1 class="display-4">RESULT</h1></div>
+                <div class="row">
+                    <h1 id="result">RESULT WILL BE DISPLAYED HERE.</h1>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col"><br>
+                        <input type="button" value="Check" id="check"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    $("#check").click(function () {
+        var text1 = $("#initial").val();
+        var text2 = $("#final").val();
+        var output = check_diff(text1, text2);
+        $("#result").html(output);
+    });
+    var correct = function (ch) {
+        return ("<span class='green'>" + ch + "</span>")
+    };
+    var wrong = function (ch) {
+        return (" <span class='red'><strike>" + ch + "</strike></span> ")
+    };
+    var check_diff = function (text1, text2) {
+        var initial = text1.toString();
+        var final = text2.toString();
+        var minimum = (initial.length > final.length) ? initial.length : final.length;
+        var output = " ";
+        for (var i = 0; i < minimum; i++) {
+            var ti = initial.charAt(i);
+            var tf = final.charAt(i);
+            if (ti === tf) {
+                output += correct(ti);
+
+            } else {
+                console.log(ti+"#"+tf+"\n");
+
+                output += wrong(tf) + correct(ti)
+            }
+        }
+        return output;
+    }
+</script>
+</body>
+</html>
