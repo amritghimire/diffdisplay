@@ -9,6 +9,9 @@
         .green {
             color: green;
         }
+        .blue{
+            color: blue;
+        }
 
         .red {
             color: red;
@@ -65,13 +68,16 @@
     var correct = function (ch) {
         return ("<span class='green'>" + ch + "</span>")
     };
+    var skipped = function (ch) {
+        return ("<span class='blue'>" + ch + "</span>")
+    };
     var wrong = function (ch) {
         return (" <span class='red'><strike>" + ch + "</strike></span> ")
     };
     var check_diff = function (text1, text2) {
-        var initial = text1.toString();
-        var final = text2.toString();
-        var minimum = (initial.length > final.length) ? initial.length : final.length;
+        var initial = text1.toString().trim();
+        var final = text2.toString().trim();
+        var minimum = (initial.length < final.length) ? initial.length : final.length;
         var output = " ";
         for (var i = 0; i < minimum; i++) {
             var ti = initial.charAt(i);
@@ -80,10 +86,19 @@
                 output += correct(ti);
 
             } else {
-                console.log(ti+"#"+tf+"\n");
+                console.log(ti + "#" + tf + "\n");
 
-                output += wrong(tf) + correct(ti)+"✓ "
+                output += wrong(tf) + correct(ti) + "✓ "
             }
+        }
+        if (minimum < initial.length) {
+            for (var j = minimum; j < initial.length; j++) {
+                output += skipped(initial.charAt(j));
+            }
+        }
+
+        for (var k = minimum; k < final.length; k++) {
+            output += wrong(final.charAt(k));
         }
         return output;
     }
